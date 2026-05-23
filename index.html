@@ -259,8 +259,13 @@
         <div class="news-meta"><span class="news-author">다람쥐</span><span class="news-date">2026년 5월 (7일 전)</span></div>
         <div class="news-body">
           <p>오늘 아침 라벨의 현악 사중주를 방에서 듣고 있었는데, 갑자기 황조롱이 한 마리가 창가에 날아와 앉았어요. 멍하니 바라보다 음악을 끄고 영상을 찍었더니 금방 날아갔답니다. 라벨의 음악을 들으러 온 것 같죠? 새들도 라벨을 좋아하나봐요!</p>
-          <div class="news-video" style="margin-top:0.8rem;">
-            <iframe width="100%" height="280" src="https://www.youtube.com/embed/Pt6mY7UlCD8" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="max-width:480px; display:block;"></iframe>
+          <div class="news-video" style="margin-top:0.8rem; max-width:480px; position:relative; cursor:pointer;" id="yt-player" onclick="document.getElementById('yt-player').innerHTML='<iframe width=\'100%\' height=\'270\' src=\'https://www.youtube.com/embed/Pt6mY7UlCD8?autoplay=1\' frameborder=\'0\' allow=\'autoplay; encrypted-media\' allowfullscreen></iframe>'">
+            <img src="https://i.ytimg.com/vi/Pt6mY7UlCD8/maxresdefault.jpg" style="width:100%; display:block; filter:brightness(0.92);" alt="황조롱이 영상" />
+            <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center;">
+              <div style="width:48px; height:48px; background:rgba(255,255,255,0.85); border-radius:50%; display:flex; align-items:center; justify-content:center;">
+                <div style="width:0; height:0; border-top:10px solid transparent; border-bottom:10px solid transparent; border-left:18px solid #3a3630; margin-left:4px;"></div>
+              </div>
+            </div>
           </div>
         </div>
       </article>
@@ -555,7 +560,7 @@
 /* ══════════════════════════════════════
    PASSWORD & INTRO FLOW
 ══════════════════════════════════════ */
-const CORRECT_PW = '';
+const CORRECT_PW = 'casablanca';
 const screenPw    = document.getElementById('screen-password');
 const screenIntro = document.getElementById('screen-intro');
 const mainNav     = document.querySelector('nav');
