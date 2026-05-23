@@ -23,9 +23,7 @@
      INTRO SCREEN
 ══════════════════════════════════════ -->
 <div id="screen-intro">
-  <div class="intro-text" id="intro-click">
-    <span class="intro-line">LIFE'S BUT A WALKING SHADOW,</span>
-  </div>
+  <span class="intro-line" id="intro-line">LIFE'S BUT A WALKING SHADOW,</span>
 </div>
 
 <!-- ── NAVIGATION ── -->
@@ -375,6 +373,7 @@ function checkPassword() {
       screenPw.style.display = 'none';
       screenIntro.style.display = 'flex';
       screenIntro.classList.add('intro-enter');
+      if (window._introSetActive) window._introSetActive();
     }, 600);
   } else {
     pwError.style.opacity = '1';
@@ -384,11 +383,62 @@ function checkPassword() {
   }
 }
 
-/* intro click → main */
-document.getElementById('intro-click').addEventListener('click', function() {
-  screenIntro.classList.add('intro-exit');
-  setTimeout(showMain, 800);
-});
+/* intro mouse effect */
+(function() {
+  const introEl = document.getElementById('screen-intro');
+  const introLine = document.getElementById('intro-line');
+  const MAX_MOVE = 9;
+  let mouseX = 0, mouseY = 0, curX = 0, curY = 0;
+  let introActive = false;
+
+  introEl.addEventListener('mousemove', function(e) {
+    const sr = introEl.getBoundingClientRect();
+    mouseX = e.clientX - sr.left;
+    mouseY = e.clientY - sr.top;
+  });
+
+  introEl.addEventListener('mouseleave', function() {
+    const sr = introEl.getBoundingClientRect();
+    const tr = introLine.getBoundingClientRect();
+    mouseX = tr.left - sr.left + tr.width / 2;
+    mouseY = tr.top  - sr.top  + tr.height / 2;
+  });
+
+  function animateIntro() {
+    if (!introActive) { requestAnimationFrame(animateIntro); return; }
+    const sr = introEl.getBoundingClientRect();
+    const tr = introLine.getBoundingClientRect();
+    const cx = tr.left - sr.left + tr.width  / 2;
+    const cy = tr.top  - sr.top  + tr.height / 2;
+    const dx = (mouseX - cx) * 0.06;
+    const dy = (mouseY - cy) * 0.06;
+    const tx = Math.max(-MAX_MOVE, Math.min(MAX_MOVE, dx));
+    const ty = Math.max(-MAX_MOVE, Math.min(MAX_MOVE, dy));
+    curX += (tx - curX) * 0.07;
+    curY += (ty - curY) * 0.07;
+    const dist = Math.sqrt(dx*dx + dy*dy);
+    const blur = Math.min(dist * 0.18, 2.2);
+    const opacity = Math.max(0.55, 1 - dist * 0.012);
+    introLine.style.transform = `translate(${curX.toFixed(2)}px, ${curY.toFixed(2)}px)`;
+    introLine.style.filter = `blur(${blur.toFixed(2)}px)`;
+    introLine.style.opacity = opacity.toFixed(3);
+    requestAnimationFrame(animateIntro);
+  }
+  animateIntro();
+
+  introEl.addEventListener('click', function() {
+    introEl.classList.add('intro-exit');
+    setTimeout(showMain, 800);
+  });
+
+  window._introSetActive = function() {
+    introActive = true;
+    const sr = introEl.getBoundingClientRect();
+    const tr = introLine.getBoundingClientRect();
+    mouseX = tr.left - sr.left + tr.width / 2;
+    mouseY = tr.top  - sr.top  + tr.height / 2;
+  };
+})();
 
 /* auto-focus password on load */
 window.addEventListener('load', function() { pwInput.focus(); });
