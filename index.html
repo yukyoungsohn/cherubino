@@ -7,16 +7,6 @@
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
-
-<!-- ══════════════════════════════════════
-     PASSWORD SCREEN
-══════════════════════════════════════ -->
-<div id="screen-password">
-  <div class="pw-wrap">
-    <p class="pw-label">enter password</p>
-    <input type="password" id="pw-input" class="pw-input" autocomplete="off" spellcheck="false" />
-    <p class="pw-error" id="pw-error">incorrect password</p>
-  </div>
 </div>
 
 <!-- ══════════════════════════════════════
@@ -558,16 +548,12 @@
 
 <script>
 /* ══════════════════════════════════════
-   PASSWORD & INTRO FLOW
+   INTRO FLOW
 ══════════════════════════════════════ */
-const CORRECT_PW = 'casablanca';
-const screenPw    = document.getElementById('screen-password');
 const screenIntro = document.getElementById('screen-intro');
 const mainNav     = document.querySelector('nav');
 const mainPages   = document.querySelectorAll('.page');
 const mainFooter  = document.querySelector('footer');
-const pwInput     = document.getElementById('pw-input');
-const pwError     = document.getElementById('pw-error');
 
 function hideAllMain() {
   mainNav.style.display    = 'none';
@@ -576,7 +562,6 @@ function hideAllMain() {
 }
 
 function showMain() {
-  screenPw.style.display    = 'none';
   screenIntro.style.display = 'none';
   mainNav.style.display     = '';
   mainFooter.style.display  = '';
@@ -584,37 +569,8 @@ function showMain() {
   showPage('home');
 }
 
-/* start hidden */
 hideAllMain();
 screenIntro.style.display = 'none';
-
-/* password input */
-pwInput.addEventListener('keydown', function(e) {
-  if (e.key === 'Enter') checkPassword();
-});
-pwInput.addEventListener('input', function() {
-  pwError.style.opacity = '0';
-});
-
-/* also allow clicking anywhere on pw screen to focus */
-screenPw.addEventListener('click', function() { pwInput.focus(); });
-
-function checkPassword() {
-  if (pwInput.value.trim().toLowerCase() === CORRECT_PW) {
-    screenPw.classList.add('pw-exit');
-    setTimeout(function() {
-      screenPw.style.display = 'none';
-      screenIntro.style.display = 'flex';
-      screenIntro.classList.add('intro-enter');
-      if (window._introSetActive) window._introSetActive();
-    }, 600);
-  } else {
-    pwError.style.opacity = '1';
-    pwInput.value = '';
-    pwInput.classList.add('pw-shake');
-    setTimeout(function() { pwInput.classList.remove('pw-shake'); }, 400);
-  }
-}
 
 /* intro mouse effect */
 (function() {
@@ -674,7 +630,11 @@ function checkPassword() {
 })();
 
 /* auto-focus password on load */
-window.addEventListener('load', function() { pwInput.focus(); });
+window.addEventListener('load', function() {
+  screenIntro.style.display = 'flex';
+  screenIntro.classList.add('intro-enter');
+  if (window._introSetActive) window._introSetActive();
+});
 
 /* ══════════════════════════════════════
    PAGE ROUTER
