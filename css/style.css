@@ -1,0 +1,559 @@
+@import url('https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Crimson+Pro:ital,wght@0,300;0,400;1,300;1,400&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --cream: #f5f0e8;
+  --parchment: #ede6d6;
+  --ink: #2a2318;
+  --ink-light: #5a4f3e;
+  --ink-faint: #9a8f7e;
+  --sepia: #8b6f47;
+  --sepia-light: #c4a882;
+  --accent: #6b4c2a;
+  --border: rgba(90, 79, 62, 0.25);
+  --border-strong: rgba(90, 79, 62, 0.45);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background-color: var(--cream);
+  color: var(--ink);
+  font-family: 'Crimson Pro', Georgia, serif;
+  font-size: 18px;
+  line-height: 1.8;
+  min-height: 100vh;
+}
+
+/* ── noise texture overlay ── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── nav ── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  background: rgba(245, 240, 232, 0.92);
+  backdrop-filter: blur(8px);
+  border-bottom: 0.5px solid var(--border);
+  padding: 0 2rem;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nav-logo {
+  font-family: 'IM Fell English', serif;
+  font-size: 1.1rem;
+  color: var(--ink);
+  text-decoration: none;
+  letter-spacing: 0.04em;
+}
+
+.nav-links {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+}
+
+.nav-links a {
+  font-family: 'Crimson Pro', serif;
+  font-size: 0.9rem;
+  font-weight: 300;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-light);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.nav-links a:hover,
+.nav-links a.active { color: var(--ink); }
+
+.nav-links a.active::after {
+  content: '';
+  display: block;
+  height: 0.5px;
+  background: var(--ink);
+  margin-top: 1px;
+}
+
+/* ── page wrapper ── */
+.page {
+  display: none;
+  min-height: 100vh;
+  padding-top: 52px;
+}
+.page.active { display: block; }
+
+/* ── HOME ── */
+.home-hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 52px);
+  text-align: center;
+  padding: 4rem 2rem;
+  position: relative;
+}
+
+.home-hero::before {
+  content: '';
+  position: absolute;
+  top: 15%; left: 50%;
+  transform: translateX(-50%);
+  width: 1px;
+  height: 60px;
+  background: var(--border-strong);
+}
+
+.home-season {
+  font-family: 'Crimson Pro', serif;
+  font-size: 0.75rem;
+  font-weight: 300;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: 1.5rem;
+  margin-top: 1rem;
+}
+
+.home-title {
+  font-family: 'IM Fell English', serif;
+  font-size: clamp(2.8rem, 7vw, 5rem);
+  font-weight: 400;
+  color: var(--ink);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  margin-bottom: 0.5rem;
+}
+
+.home-subtitle {
+  font-family: 'IM Fell English', serif;
+  font-size: clamp(1rem, 2vw, 1.3rem);
+  font-style: italic;
+  color: var(--ink-light);
+  margin-bottom: 3rem;
+}
+
+.home-divider {
+  width: 40px;
+  height: 0.5px;
+  background: var(--border-strong);
+  margin: 0 auto 3rem;
+}
+
+.home-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 220px));
+  gap: 1px;
+  border: 0.5px solid var(--border-strong);
+  background: var(--border-strong);
+  max-width: 680px;
+  width: 100%;
+}
+
+.home-card {
+  background: var(--cream);
+  padding: 2.5rem 1.5rem;
+  text-align: center;
+  cursor: pointer;
+  transition: background 0.25s;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.home-card:hover { background: var(--parchment); }
+
+.home-card-icon {
+  font-size: 1.4rem;
+  color: var(--sepia);
+  line-height: 1;
+}
+
+.home-card-title {
+  font-family: 'IM Fell English', serif;
+  font-size: 1.05rem;
+  color: var(--ink);
+}
+
+.home-card-sub {
+  font-size: 0.8rem;
+  font-weight: 300;
+  letter-spacing: 0.05em;
+  color: var(--ink-faint);
+  text-transform: uppercase;
+}
+
+/* ── section layout ── */
+.section-wrap {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 4rem 2rem 6rem;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 3rem;
+  padding-bottom: 2rem;
+  border-bottom: 0.5px solid var(--border);
+}
+
+.section-eyebrow {
+  font-size: 0.72rem;
+  font-weight: 300;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: 0.75rem;
+}
+
+.section-title {
+  font-family: 'IM Fell English', serif;
+  font-size: 2rem;
+  color: var(--ink);
+}
+
+/* ── LETTER page ── */
+.letter-wrap {
+  max-width: 620px;
+  margin: 0 auto;
+  padding: 5rem 2rem 8rem;
+}
+
+.letter-image {
+  width: 100%;
+  max-height: 340px;
+  object-fit: cover;
+  margin-bottom: 3rem;
+  filter: sepia(20%) contrast(0.95);
+}
+
+.letter-body {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.15rem;
+  font-weight: 300;
+  line-height: 2;
+  color: var(--ink);
+}
+
+.letter-body p { margin-bottom: 1.5rem; }
+
+.letter-body em {
+  font-style: italic;
+  color: var(--ink-light);
+}
+
+.letter-salutation {
+  font-family: 'IM Fell English', serif;
+  font-style: italic;
+  font-size: 1.3rem;
+  color: var(--sepia);
+  margin-bottom: 2rem;
+  display: block;
+}
+
+.letter-sig {
+  font-family: 'IM Fell English', serif;
+  font-style: italic;
+  font-size: 1.1rem;
+  color: var(--ink-light);
+  margin-top: 2.5rem;
+  text-align: right;
+}
+
+/* ── MUSIC page ── */
+.music-intro {
+  font-family: 'IM Fell English', serif;
+  font-style: italic;
+  font-size: 1.05rem;
+  color: var(--ink-faint);
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.music-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 4rem;
+}
+
+.music-card {
+  border: 0.5px solid var(--border);
+  background: rgba(255,255,255,0.4);
+  transition: background 0.2s, border-color 0.2s;
+  overflow: hidden;
+}
+
+.music-card:hover {
+  background: rgba(255,255,255,0.7);
+  border-color: var(--border-strong);
+}
+
+.music-thumb {
+  width: 100%;
+  aspect-ratio: 16/9;
+  object-fit: cover;
+  display: block;
+  filter: sepia(15%) contrast(0.95);
+}
+
+.music-card-body { padding: 1rem 1.1rem 1.2rem; }
+
+.music-card-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.95rem;
+  font-weight: 400;
+  color: var(--ink);
+  line-height: 1.4;
+  margin-bottom: 0.6rem;
+}
+
+.music-card-link {
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--sepia);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  transition: color 0.2s;
+}
+.music-card-link:hover { color: var(--accent); }
+
+/* comments */
+.comments-section {
+  border-top: 0.5px solid var(--border);
+  padding-top: 3rem;
+  margin-top: 1rem;
+}
+
+.comments-title {
+  font-family: 'IM Fell English', serif;
+  font-size: 1.2rem;
+  color: var(--ink);
+  margin-bottom: 0.4rem;
+}
+
+.comments-sub {
+  font-size: 0.82rem;
+  color: var(--ink-faint);
+  margin-bottom: 2rem;
+  font-style: italic;
+}
+
+#disqus_thread a { color: var(--sepia) !important; }
+
+/* ── NEWS page ── */
+.news-thread { display: flex; flex-direction: column; gap: 0; }
+
+.news-post {
+  padding: 2.5rem 0;
+  border-bottom: 0.5px solid var(--border);
+  position: relative;
+}
+.news-post:first-child { border-top: 0.5px solid var(--border); }
+
+.news-meta {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.news-author {
+  font-family: 'IM Fell English', serif;
+  font-size: 1rem;
+  color: var(--ink);
+}
+
+.news-date {
+  font-size: 0.78rem;
+  font-weight: 300;
+  letter-spacing: 0.06em;
+  color: var(--ink-faint);
+}
+
+.news-body {
+  font-size: 1rem;
+  line-height: 1.85;
+  color: var(--ink);
+}
+
+.news-body p { margin-bottom: 1rem; }
+.news-body p:last-child { margin-bottom: 0; }
+
+.news-video {
+  margin: 1.2rem 0;
+}
+
+.news-video a {
+  font-size: 0.85rem;
+  color: var(--sepia);
+  text-decoration: none;
+  word-break: break-all;
+  border-bottom: 0.5px solid var(--sepia-light);
+  transition: color 0.2s;
+}
+.news-video a:hover { color: var(--accent); }
+
+.news-image {
+  max-width: 60px;
+  margin: 0.8rem 0;
+  filter: sepia(20%);
+}
+
+.news-comments-section {
+  border-top: 0.5px solid var(--border);
+  padding-top: 3rem;
+  margin-top: 3rem;
+}
+
+/* ── footer ── */
+footer {
+  text-align: center;
+  padding: 3rem 2rem;
+  border-top: 0.5px solid var(--border);
+  font-size: 0.8rem;
+  color: var(--ink-faint);
+  font-weight: 300;
+  letter-spacing: 0.06em;
+}
+
+/* ══════════════════════════════════════
+   PASSWORD SCREEN
+══════════════════════════════════════ */
+#screen-password {
+  position: fixed;
+  inset: 0;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  transition: opacity 0.5s ease;
+}
+
+#screen-password.pw-exit {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.pw-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.2rem;
+}
+
+.pw-label {
+  font-family: 'Crimson Pro', serif;
+  font-size: 0.78rem;
+  font-weight: 300;
+  letter-spacing: 0.22em;
+  text-transform: lowercase;
+  color: #aaa;
+}
+
+.pw-input {
+  background: transparent;
+  border: none;
+  border-bottom: 0.5px solid #ccc;
+  outline: none;
+  font-family: 'Crimson Pro', serif;
+  font-size: 1.1rem;
+  font-weight: 300;
+  letter-spacing: 0.3em;
+  color: #333;
+  text-align: center;
+  width: 180px;
+  padding: 0.3rem 0;
+  transition: border-color 0.2s;
+}
+
+.pw-input:focus { border-bottom-color: #888; }
+
+.pw-error {
+  font-family: 'Crimson Pro', serif;
+  font-size: 0.75rem;
+  font-style: italic;
+  color: #c0a0a0;
+  letter-spacing: 0.08em;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+@keyframes pw-shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-6px); }
+  75% { transform: translateX(6px); }
+}
+.pw-shake { animation: pw-shake 0.35s ease; }
+
+/* ══════════════════════════════════════
+   INTRO SCREEN
+══════════════════════════════════════ */
+#screen-intro {
+  position: fixed;
+  inset: 0;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding-left: 10vw;
+  z-index: 9998;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+#screen-intro.intro-enter { opacity: 1; }
+
+#screen-intro.intro-exit {
+  opacity: 0;
+  transition: opacity 0.7s ease;
+}
+
+.intro-text {
+  user-select: none;
+}
+
+.intro-line {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1rem, 2.2vw, 1.55rem);
+  font-weight: 300;
+  letter-spacing: 0.18em;
+  color: #aaa;
+  text-transform: uppercase;
+  display: block;
+  transition: color 0.3s;
+}
+
+#screen-intro:hover .intro-line { color: #777; }
+
+/* ══════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════ */
+/* ── responsive ── */
+@media (max-width: 600px) {
+  nav { padding: 0 1rem; }
+  .nav-links { gap: 1.2rem; }
+  .nav-links a { font-size: 0.78rem; letter-spacing: 0.05em; }
+  .section-wrap, .letter-wrap { padding: 2.5rem 1.2rem 5rem; }
+  .music-grid { grid-template-columns: 1fr; }
+}
