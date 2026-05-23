@@ -532,10 +532,10 @@ footer {
 
 .intro-line {
   font-family: 'Cormorant Garamond', serif;
-  font-size: 10.5px;
+  font-size: 15px;
   font-weight: 300;
-  letter-spacing: 0.2em;
-  color: #b0aa9f;
+  letter-spacing: 0.1em;
+  color: #3a3630;
   text-transform: uppercase;
   white-space: nowrap;
   user-select: none;
